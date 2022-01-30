@@ -13,7 +13,7 @@ pipeline {
 	  
 	stage ('Build')  {
 	    steps {
-        dir('LogInApp'){
+        dir('loginappDemo'){
             sh "mvn package"
           }
         }    
@@ -22,7 +22,7 @@ pipeline {
   stage ('SonarQube Analysis') {
     steps {
       withSonarQubeEnv('sonar') {           
-				dir('LogInApp'){
+				dir('loginappDemo'){
           sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=cicd_project'
         }
     }
