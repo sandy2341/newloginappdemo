@@ -28,6 +28,41 @@ pipeline {
     }
     }
  }
+     stage ('Artifactory configuration') {
+            steps {
+                rtServer (
+                    id: "JFrog",
+                    url: "https://sandya.jfrog.io/artifactory",
+                    credentialsId: "JFrog"
+                )
+
+                rtMavenDeployer (
+                    id: "MAVEN_DEPLOYER",
+                    serverId: "jfrog",
+                    releaseRepo: "newloginappdemo-libs-release-local",
+                    snapshotRepo: "newloginappdemo-libs-snapshot-local"
+                )
+
+                rtMavenResolver (
+                    id: "MAVEN_RESOLVER",
+                    serverId: "jfrog",
+                    releaseRepo: "default-maven-virtual",
+                    snapshotRepo: "default-maven-virtual"
+                )
+            }
+    }
+
+    stage ('Deploy Artifacts') {
+            steps {
+                rtMavenRun (
+                    tool: "maven", // Tool name from Jenkins configuration
+                    pom: 'loginappDemo/pom.xml',
+                    goals: 'clean install',
+                    deployerId: "MAVEN_DEPLOYER",
+                    resolverId: "MAVEN_RESOLVER"
+                )
+         }
+    }
 
   } 
 }
