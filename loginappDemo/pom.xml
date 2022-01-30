@@ -72,7 +72,7 @@
     <repository>
         <id>central</id>
         <name>a0lxujq7dvwvl-artifactory-primary-0-releases</name>
-        <url>https://sandya.jfrog.io/artifactory/default01-libs-release-local</url>
+        <url>https://sandya.jfrog.io/artifactory/newloginappdemo-libs-release-local</url>
     </repository>
 </distributionManagement>
 
